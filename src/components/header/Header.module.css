@@ -1,0 +1,12 @@
+.Header{
+  display: flex;
+  background-color:DarkOliveGreen;
+  padding:20px 60px;
+  color: lightyellow;
+  gap:12px;
+  align-items: center;
+}
+
+.Header :last-child{
+  margin-left: auto;
+}

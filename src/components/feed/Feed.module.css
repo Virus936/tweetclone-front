@@ -1,0 +1,14 @@
+.Feed{
+  background-color:#65fcc2;
+  margin:0;
+  padding:50px;
+}
+.Tweet{
+  
+  border-radius: 10px;
+  background: linear-gradient(145deg,#6cffd0, #5be3af);
+  box-shadow:  6px 6px 14px #56d6a5,
+    -6px -6px 14px #74ffdf;
+  margin: 30px;
+  padding:20px;
+}
