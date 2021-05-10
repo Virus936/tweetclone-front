@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import  useAuthToken from '../../customHook/useToken';
 import styles from './Feed.module.css';
+import {useStateValue} from '../../context/logContext'
+import {refreshToken, postTweet} from '../../actions/auth-action'
+import { API_URL } from '../../setting';
+
 
 const Tweet = ({author, content}) => { 
   return <div className={styles.Tweet}>
@@ -11,53 +14,50 @@ const Tweet = ({author, content}) => {
     </div> 
 }
 
-const NewTweet = () => {
+const TweetCreate = ({addTweet}) => {
 
-  const [authToken, setAuthToken] = useAuthToken('')
-  const handleSubmit = e => {
+  const [ authToken , dispatch ] = useStateValue()
+  const [content, setContent] = useState('');
+
+  const handleSubmit = async e => {
     e.preventDefault()
-
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer "+authToken.access);
-    let formdata = new FormData(e.target);
-
-    let requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: formdata,
-      redirect: 'follow'
-    };
-
-    fetch("http://localhost:8000/api/tweets/", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    const updatedToken = await refreshToken(authToken.refresh)
+    dispatch({
+      type:'REFRESH',
+      item: updatedToken.access
+    })
+    addTweet(await postTweet(e.target, updatedToken.access))
+    setContent('')
   }
   return <form className={styles.FormTweet} onSubmit={handleSubmit}>
-      <input name='content' type="text" placeholder="tweeter ici" />
+    <textarea className={styles.Textarea} name="content" value={content} onChange={ (e) => setContent(e.target.value) } cols="30" rows="10" placeholder='tweeter ici'></textarea>
     <input type="submit" value="Envoyer" />
     </form>
 }
 
 function Feed() {
-  const FeedAPI = "http://localhost:8000/api/tweets"
   const [feed, setFeed] = useState([])
+  const addTweet = (tweet) => {
+    const newFeed = feed.slice()
+    newFeed.unshift(tweet)
+    setFeed(newFeed)
+  }
 
   useEffect(() => {
-    var requestOptions = {
+    let requestOptions = {
       method: 'GET',
       redirect: 'follow'
     }
-    fetch(FeedAPI, requestOptions)
+    fetch( `${API_URL}/api/tweets`, requestOptions)
       .then(res => res.json())
       .then(res => setFeed(res))
   }, [])
 
   return (
     <div className={styles.Feed}>
-      <NewTweet />
+      <TweetCreate addTweet={addTweet}/>
 
-      { feed.map( (tweet) => <Tweet key={tweet.id} author={tweet.author} content={tweet.content} />  )  }
+      { feed.map(tweet=><Tweet key={tweet.id} author={tweet.author} content={tweet.content} />)}
     </div>
   )
 }
