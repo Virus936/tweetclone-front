@@ -26,12 +26,21 @@
   flex-direction: column;
   align-items: center;
   margin:20px;
+  padding: 20px;
+  border-radius:10px;
+  border: solid;
+  background-color: LightGoldenrodYellow;
   }
 .Textarea{
   resize:none;
-  padding: 20px;
-  border-radius:10px;
+  focus:none;
+  border : none;
   color:green;
-  background-color: LightGoldenrodYellow;
+  background-color: transparent;
   width:80%;
+}
+.Textarea:focus{
+  outline:none
+}
+.inputFile{
 }

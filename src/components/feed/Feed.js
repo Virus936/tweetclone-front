@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styles from './Feed.module.css';
 import {useStateValue} from '../../context/logContext'
 import {refreshToken, postTweet} from '../../actions/auth-action'
@@ -21,6 +21,7 @@ const TweetCreate = ({addTweet}) => {
   const [content, setContent] = useState('');
   const [picture, setPicture] = useState('');
 
+  const fileRef = useRef(null);
   const handleSubmit = async e => {
     e.preventDefault()
     if (content || picture){
@@ -35,23 +36,22 @@ const TweetCreate = ({addTweet}) => {
       e.target.reset()
     }
   }
-  const handlePicture = (e) => {
-    setPicture(URL.createObjectURL(e.target.files[0]))
-  }
+    const handlePicture = () => setPicture(fileRef.current.files[0])
+
   return (
     <>
     <form className={styles.FormTweet} onSubmit={handleSubmit}>
     <textarea className={styles.Textarea} name="content" value={content} onChange={ (e) => setContent(e.target.value) } cols="30" rows="10" placeholder='tweeter ici'></textarea>
-    <input id="qwe" type="file" name="picture"  onChange={handlePicture} accept="image/png, image/jpeg" />
+    <input className={styles.inputFile} ref={fileRef} type="file" name="picture"  onChange={handlePicture} accept="image/png, image/jpeg" />
     <input type="submit" value="Envoyer" />
   </form>
-      {(content || picture )&& <Tweet content={content} picture = {picture} /> }
+      {(content || picture )&& <Tweet content={content} picture={picture && URL.createObjectURL(picture)}  /> }
     </>)
 }
 
 function Feed() {
   const [feed, setFeed] = useState([])
-  const [ authToken , dispatch ] = useStateValue()
+  const [ authToken ] = useStateValue()
   const addTweet = (tweet) => {
     const newFeed = feed.slice()
     newFeed.unshift(tweet)
