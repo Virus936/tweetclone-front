@@ -7,13 +7,27 @@ import { API_URL } from '../../setting';
 
 const Tweet = ({author, content, picture}) => { 
   return <div className={styles.Tweet}>
-      <h2>{author}</h2>
+    <aside>
+    <img className={styles.profile} src={author.profile.pp} alt="" />
+    </aside>
+      <h2>{author.username}</h2>
       <div>
         <p>{content}</p>
         {picture&& <img src={picture} alt="pictweet" /> }
       </div>
     </div> 
 }
+Tweet.defaultProps = {
+  author : {
+    username:'',
+    profile:{
+      pp:''
+    }
+  },
+  content:'le contenu du tweet',
+  picture:''
+};
+
 
 const TweetCreate = ({addTweet}) => {
 
@@ -40,11 +54,13 @@ const TweetCreate = ({addTweet}) => {
 
   return (
     <>
-    <form className={styles.FormTweet} onSubmit={handleSubmit}>
-    <textarea className={styles.Textarea} name="content" value={content} onChange={ (e) => setContent(e.target.value) } cols="30" rows="10" placeholder='tweeter ici'></textarea>
-    <input className={styles.inputFile} ref={fileRef} type="file" name="picture"  onChange={handlePicture} accept="image/png, image/jpeg" />
-    <input type="submit" value="Envoyer" />
-  </form>
+      <form className={styles.FormTweet} onSubmit={handleSubmit}>
+        <textarea className={styles.Textarea} name="content" value={content} onChange={ (e) => setContent(e.target.value) } cols="30" rows="10" placeholder='tweeter ici'></textarea>
+        <div styles="background-color:black;">
+          <input className={styles.inputFile} ref={fileRef} type="file" name="picture"  onChange={handlePicture} accept="image/png, image/jpeg" />
+          <input type="submit" value="Envoyer" />
+        </div>
+      </form>
       {(content || picture )&& <Tweet content={content} picture={picture && URL.createObjectURL(picture)}  /> }
     </>)
 }
@@ -72,9 +88,12 @@ function Feed() {
     <div className={styles.Feed}>
       {authToken && <TweetCreate addTweet={addTweet}/> }
 
-      { feed.map(tweet=><Tweet key={tweet.id} author={tweet.author} picture={tweet.picture} content={tweet.content} />)}
+      { feed.map(tweet=><Tweet key={tweet.id} author={ tweet.author } picture={tweet.picture} content={tweet.content} />)}
     </div>
   )
 }
 
 export default Feed;
+
+
+
