@@ -31,3 +31,27 @@ export const postTweet = async ( formTweet , access) => {
   return newtweet.json()
 }
 
+export const updateProfile = async ( formTweet , access) => {
+  
+  let myHeaders = new Headers();
+  myHeaders.append( "Authorization", `Bearer ${access} `);
+  let formdata = new FormData(formTweet);
+
+  let requestOptions = {
+    method: 'PUT',
+    headers: myHeaders,
+    body: formdata,
+    redirect: 'follow'
+  };
+  console.log(formTweet)
+
+  console.log(formdata)
+
+fetch("http://localhost:8000/profile/", requestOptions)
+
+
+
+
+  
+}
+
