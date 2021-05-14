@@ -21,6 +21,9 @@ function App() {
           
           <Login />
         </Route>
+        <Route path='/profile'>
+          <h1>Page de profile</h1>
+        </Route>
         <Route path='/register'>
           <h1>Register Page</h1>
         </Route>

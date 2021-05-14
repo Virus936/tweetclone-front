@@ -9,7 +9,7 @@ export const reducer = (state, action) => {
       return action.item
     case 'DISCONECT':
       localStorage.removeItem('authToken')
-      return {}
+      return null
     case 'REFRESH':
       state.access = action.item
       localStorage.setItem('authToken',JSON.stringify(state))

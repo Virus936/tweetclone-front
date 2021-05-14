@@ -56,6 +56,7 @@ const TweetCreate = ({addTweet}) => {
     <>
       <form className={styles.FormTweet} onSubmit={handleSubmit}>
         <textarea className={styles.Textarea} name="content" value={content} onChange={ (e) => setContent(e.target.value) } cols="30" rows="10" placeholder='tweeter ici'></textarea>
+        <input type="textarea" name='test' />
         <div styles="background-color:black;">
           <input className={styles.inputFile} ref={fileRef} type="file" name="picture"  onChange={handlePicture} accept="image/png, image/jpeg" />
           <input type="submit" value="Envoyer" />
@@ -94,6 +95,3 @@ function Feed() {
 }
 
 export default Feed;
-
-
-

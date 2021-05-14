@@ -8,7 +8,7 @@
 }
 .Tweet{
   display: grid;
-  grid-template-columns: 50px auto;
+  grid-template-columns: 70px auto;
   grid-gap: 10px;
   border-radius: 10px;
   background: linear-gradient(145deg,#6cffd0, #5be3af);
@@ -29,7 +29,7 @@
 
 .profile{
   display:block;
-  width:30px;
+  width:50px;
 }
 
 .FormTweet{

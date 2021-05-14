@@ -10,7 +10,7 @@ function Login({setToken}) {
   const [password, setPassword] = useState('')
   const [ authToken, dispatch ]= useStateValue()
 
-  const handleLogin = e => {
+  const handleLogin = async e => {
     e.preventDefault()
 
     var formdata = new FormData();
@@ -23,19 +23,19 @@ function Login({setToken}) {
       redirect: 'follow'
     };
 
-    fetch(BASE_URL+"/auth/login/", requestOptions)
-      .then(response => response.json())
-      .then(result => dispatch({
-        type:"LOGIN",
-        item: result
-      }))
-      .catch(error => console.log('error', error));
+    let response = await fetch(BASE_URL+"/auth/login/", requestOptions)
+    if (( 200 <= response.status ) && ( response.status < 300 )) {
+      response = await response.json()
+      dispatch({
+        type:'LOGIN',
+        item:response
+      })
+    }
   }
 
   return (
     <div className="login">
       {authToken?.access &&  <Redirect to='/'/> }
-      {typeof(authToken)}
       <form action="/">
         <input 
           name="username" 

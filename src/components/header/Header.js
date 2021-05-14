@@ -5,21 +5,26 @@ import {useStateValue} from '../../context/logContext'
 
 import { Link } from "react-router-dom";
 
-const Log = ({onClick}) => <Link to="/login" onClick={onClick} className="link">Logout</Link>
+const Log = ({onClick}) => {
+  const [ authToken, dispatch ]= useStateValue()
+
+  const disconect = () => {
+    dispatch({
+      type:'DISCONECT'
+    })
+  }
+  return <Link to="/login" onClick={disconect} className="link">{authToken?'Logout':'Login' }</Link>
+}
 
 
 function Header({ logout }) {
-  const [ authToken, dispatch ]= useStateValue()
 
   return (
     <header className={ styles.Header } >
       <Logo fill='lightyellow' style={{width:'40px', height:'40px' }} />
       <h1>TweetFarmer</h1>
-      <Log onClick={()=>{
-        dispatch({
-          type:'DISCONECT'
-        })
-      }}/>
+      <Log />
+
     </header>
   );
 }
