@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Header.module.css';
 import {ReactComponent as Logo} from './logo.svg'
+import {ReactComponent as Logout} from './logout.svg'
 import {useStateValue} from '../../context/logContext'
 
 import { Link } from "react-router-dom";
@@ -13,7 +14,7 @@ const Log = ({onClick}) => {
       type:'DISCONECT'
     })
   }
-  return <Link to="/login" onClick={disconect} className="link">{authToken?'Logout':'Login' }</Link>
+  return <Link to="/login" onClick={disconect} className="link">{authToken?<Logout fill='lightyellow'/>:'Login' }</Link>
 }
 
 
