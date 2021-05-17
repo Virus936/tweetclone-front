@@ -14,7 +14,9 @@ const Log = ({onClick}) => {
       type:'DISCONECT'
     })
   }
-  return <Link to="/login" onClick={disconect} className="link">{authToken?<Logout fill='lightyellow'/>:'Login' }</Link>
+  return <Link to="/login" onClick={disconect} className="link">
+    {authToken?<Logout fill='lightyellow'style={{width:'40px', height:'40px' }}/>:'Login' }
+    </Link>
 }
 
 
