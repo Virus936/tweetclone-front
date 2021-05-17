@@ -40,10 +40,13 @@ const TweetCreate = ({addTweet}) => {
     e.preventDefault()
     if (content || picture){
       const updatedToken = await refreshToken(authToken.refresh)
-      dispatch({
-        type:'REFRESH',
-        item: updatedToken.access
-      })
+      if (updatedToken.access) {
+        
+        dispatch({
+          type:'REFRESH',
+          item: updatedToken.access
+        })
+      } else window.location = '/login'
       addTweet(await postTweet(e.target, updatedToken.access))
       setContent('')
       setPicture('')
