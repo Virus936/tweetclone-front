@@ -17,6 +17,8 @@
   margin: 30px;
   padding:20px;
   overflow:hidden;
+  transition:0.5s;
+  opacity:0;
 }
 .Tweet aside{
   grid-row:span 3;

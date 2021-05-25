@@ -6,7 +6,27 @@ import { API_URL } from '../../setting';
 
 
 const Tweet = ({author, content, picture}) => { 
-  return <div className={styles.Tweet}>
+  const tweetref = useRef(null)
+
+  const displayTweet = (entries, observer) => {
+    entries.forEach(entry =>{
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = 1
+        entry.target.style.transform = 'translateX(0)'
+      }else{
+        entry.target.style.opacity=0
+        entry.target.style.transform = 'translateX(-20px)'
+      }
+    })
+  }
+  const options = {
+    threshold:0.3
+  }
+  useEffect( () => {
+    const observer = new IntersectionObserver(displayTweet,options)
+    observer.observe(tweetref.current)
+  })
+  return <div className={styles.Tweet} ref={tweetref}>
     <aside>
     <img className={styles.profile} src={author.profile.pp} alt="" />
     </aside>
@@ -59,7 +79,6 @@ const TweetCreate = ({addTweet}) => {
     <>
       <form className={styles.FormTweet} onSubmit={handleSubmit}>
         <textarea className={styles.Textarea} name="content" value={content} onChange={ (e) => setContent(e.target.value) } cols="30" rows="10" placeholder='tweeter ici'></textarea>
-        <input type="textarea" name='test' />
         <div styles="background-color:black;">
           <input className={styles.inputFile} ref={fileRef} type="file" name="picture"  onChange={handlePicture} accept="image/png, image/jpeg" />
           <input type="submit" value="Envoyer" />
@@ -89,7 +108,7 @@ function Feed() {
   }, [])
 
   return (
-    <div className={styles.Feed}>
+    <div className={styles.Feed} >
       {authToken && <TweetCreate addTweet={addTweet}/> }
 
       { feed.map(tweet=><Tweet key={tweet.id} author={ tweet.author } picture={tweet.picture} content={tweet.content} />)}
