@@ -5,8 +5,11 @@ import {refreshToken, postTweet} from '../../actions/auth-action'
 import { API_URL } from '../../setting';
 
 
-const Tweet = ({author, content, picture}) => { 
+const Tweet = ({author, content, picture,tweetid, numlike, likeornot}) => { 
   const tweetref = useRef(null)
+  const [like, setLike] = useState(numlike);
+  const [ authToken , dispatch ] = useStateValue()
+  const [islike, setIslike] = useState(likeornot)
 
   const displayTweet = (entries, observer) => {
     entries.forEach(entry =>{
@@ -26,6 +29,34 @@ const Tweet = ({author, content, picture}) => {
     const observer = new IntersectionObserver(displayTweet,options)
     observer.observe(tweetref.current)
   })
+  const handleLike = async() => {
+
+    const updatedToken = await refreshToken(authToken.refresh)
+
+    if (updatedToken.access) {
+      dispatch({
+        type:'REFRESH',
+        item: updatedToken.access
+      })
+    } 
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authToken.access}`);
+
+    let requestOptions = {
+      method: 'PUT',
+      headers:myHeaders,
+      redirect: 'follow'
+    }
+
+    fetch(`${API_URL}/api/like/${tweetid}`, requestOptions)
+    console.log('qweqwe')
+    setLike(like+!islike-islike)
+    setIslike(!islike)
+
+
+  }
+  
   return <div className={styles.Tweet} ref={tweetref}>
     <aside>
     <img className={styles.profile} src={author.profile.pp} alt="" />
@@ -34,6 +65,7 @@ const Tweet = ({author, content, picture}) => {
       <div>
         <p>{content}</p>
         {picture&& <img src={picture} alt="pictweet" /> }
+        <span onClick={handleLike}>{like} like {islike?'true':'false'}</span>
       </div>
     </div> 
 }
@@ -90,28 +122,49 @@ const TweetCreate = ({addTweet}) => {
 
 function Feed() {
   const [feed, setFeed] = useState([])
-  const [ authToken ] = useStateValue()
+  const [ authToken , dispatch ] = useStateValue()
+  
   const addTweet = (tweet) => {
     const newFeed = feed.slice()
     newFeed.unshift(tweet)
     setFeed(newFeed)
+    console.log(feed)
   }
 
   useEffect(() => {
-    let requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
+
+    const fetchAPI = async () => {
+      const updatedToken = await refreshToken(authToken.refresh)
+
+      if (updatedToken.access) {
+        dispatch({
+          type:'REFRESH',
+          item: updatedToken.access
+        })
+      } 
+
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${authToken.access}`);
+
+      let requestOptions = {
+        method: 'GET',
+        headers:myHeaders,
+        redirect: 'follow'
+      }
+
+      fetch( `${API_URL}/api/tweets`, requestOptions)
+        .then(res => res.json())
+        .then(res => setFeed(res))
     }
-    fetch( `${API_URL}/api/tweets`, requestOptions)
-      .then(res => res.json())
-      .then(res => setFeed(res))
+
+    fetchAPI()
   }, [])
 
   return (
     <div className={styles.Feed} >
       {authToken && <TweetCreate addTweet={addTweet}/> }
 
-      { feed.map(tweet=><Tweet key={tweet.id} author={ tweet.author } picture={tweet.picture} content={tweet.content} />)}
+      { feed.map(tweet=><Tweet key={tweet.id} tweetid={tweet.id} numlike= { tweet.numlike } likeornot={tweet.likeornot} author={ tweet.author } picture={tweet.picture} content={tweet.content} />)}
     </div>
   )
 }
