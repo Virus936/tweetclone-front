@@ -134,17 +134,20 @@ function Feed() {
   useEffect(() => {
 
     const fetchAPI = async () => {
-      const updatedToken = await refreshToken(authToken.refresh)
-
-      if (updatedToken.access) {
-        dispatch({
-          type:'REFRESH',
-          item: updatedToken.access
-        })
-      } 
-
       const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${authToken.access}`);
+      if(authToken){
+
+        myHeaders.append("Authorization", `Bearer ${authToken.access}`);
+        const updatedToken = await refreshToken(authToken.refresh)
+
+        if (updatedToken.access) {
+          dispatch({
+            type:'REFRESH',
+            item: updatedToken.access
+          })
+        } 
+      }
+
 
       let requestOptions = {
         method: 'GET',
