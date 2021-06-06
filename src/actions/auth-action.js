@@ -10,8 +10,10 @@ export const refreshToken = async refresher => {
     redirect: 'follow'
   };
   let updatedToken = await fetch(`${API_URL}/auth/login/refresh/`, refreshOption)
-  updatedToken =  updatedToken.json()
-  return  updatedToken
+  if (updatedToken.ok) {
+    updatedToken =  updatedToken.json()
+  }
+    return updatedToken
 }
 
 export const postTweet = async ( formTweet , access) => {
