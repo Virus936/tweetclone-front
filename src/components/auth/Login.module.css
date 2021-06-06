@@ -1,0 +1,31 @@
+.Login{
+  position: absolute;
+  display: flex;
+  top:0;
+  justify-content: center;
+  align-items: center;
+  height:100vh;
+  width:100vw;
+}
+.Login form{
+  display:flex; 
+  flex-direction: column;
+  gap:20px;
+}
+.Login input{
+  padding: 12px 20px;
+  background-color: LightGoldenrodYellow;
+  color:mediumseagreen;
+  display: inline-block;
+  border: solid mediumseagreen;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.Login input:focus{
+  border:mediumseagreen;
+
+  outline:solid seagreen;
+}
+.Login button{
+  padding: 12px 20px;
+}

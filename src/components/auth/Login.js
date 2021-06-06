@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import './Login.css';
+import styles from './Login.module.css';
 import {useStateValue} from '../../context/logContext'
 import {Redirect} from 'react-router-dom'
-
-const BASE_URL = "http://localhost:8000"
+import { API_URL } from '../../setting';
 
 function Login({setToken}) {
   const [username, setUsername] = useState('')
@@ -23,7 +22,7 @@ function Login({setToken}) {
       redirect: 'follow'
     };
 
-    let response = await fetch(BASE_URL+"/auth/login/", requestOptions)
+    let response = await fetch(`${API_URL}/auth/login/`, requestOptions)
     if (( 200 <= response.status ) && ( response.status < 300 )) {
       response = await response.json()
       dispatch({
@@ -34,7 +33,7 @@ function Login({setToken}) {
   }
 
   return (
-    <div className="login">
+    <div className={styles.Login}>
       {authToken?.access &&  <Redirect to='/'/> }
       <form action="/">
         <input 
