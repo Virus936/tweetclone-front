@@ -3,6 +3,7 @@ import styles from './Tweet.module.css';
 import {useStateValue} from '../../context/logContext'
 import {refreshToken } from '../../actions/auth-action'
 import { API_URL } from '../../setting';
+import Like from './Like'
 
 
 export const Tweet = ({author, content, picture,tweetid, numlike, likeornot}) => { 
@@ -65,7 +66,8 @@ export const Tweet = ({author, content, picture,tweetid, numlike, likeornot}) =>
       <div>
         <p>{content}</p>
         {picture&& <img src={picture} alt="pictweet" /> }
-        <span onClick={handleLike}>{like} like {islike?'true':'false'}</span>
+          {like} 
+            <Like onClick={handleLike} isLike={islike}/>
       </div>
     </div> 
 }
