@@ -1,6 +1,46 @@
 .Profile{
+  display:grid;
   width:700px;
   margin:40px auto;
+  grid-column: ;
+  grid-template-columns: 1fr 1fr;
 
-  border: solid;
+}
+.Profile .picture{
+  display: flex;
+}
+
+.Profile img{
+  height: 70px;
+  width: 70px;
+  overflow: hidden;
+}
+
+
+.Profile input:not([type=file]){
+  padding: 12px 20px;
+  background-color: LightGoldenrodYellow;
+  color:mediumseagreen;
+  display: inline-block;
+  border: solid mediumseagreen;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea{
+  resize:none;
+  focus:none;
+  border : none;
+  color:green;
+  font-size: 1rem;
+  background-color: rgba(200,200,200, .3);
+}
+
+.Profile input[type=submit]{
+  border-radius:20px;
+  padding: 10px;
+  border:solid 2px green ;
+  background-color: rgb(0, 156, 98);
+  color:#fff;
+  font-weight: bold;
 }

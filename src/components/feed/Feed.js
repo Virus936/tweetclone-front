@@ -23,15 +23,15 @@ function Feed() {
       const myHeaders = new Headers();
       if(authToken){
         const updatedToken = await refreshToken(authToken.refresh)
-        dispatch({
-          type:'REFRESH',
-          item: updatedToken.access
-        })
         if (updatedToken.status === 401) {
           dispatch({
             type:'DISCONECT'
           })
         }else{
+          dispatch({
+            type:'REFRESH',
+            item: updatedToken.access
+          })
           myHeaders.append("Authorization", `Bearer ${authToken.access}`);
         }
 

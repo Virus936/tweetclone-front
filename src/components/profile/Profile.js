@@ -14,13 +14,22 @@ function Profile() {
 
 
   const fetchData = async () => {
+    if (!authToken) {
+      window.location = `/login`
+    }
     const updatedToken = await refreshToken(authToken.refresh)
+    if (updatedToken.status === 401) {
+      dispatch({
+        type:'DISCONECT'
+      })
+      window.location = `/login`
+    }
     dispatch({
       type:'REFRESH',
       item: updatedToken.access
     })
-    var myHeaders = new Headers();
 
+    var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${authToken.access}`)
 
     var requestOptions = {
@@ -56,7 +65,7 @@ function Profile() {
 
   return (
     <form className={styles.Profile} onSubmit={submitProfile}>
-      <div className="picture">
+      <div className={styles.picture}>
         <img src={picture} alt="a" />
         <input type="file" name="profile.pp" />
       </div>
@@ -66,13 +75,13 @@ function Profile() {
       <div className="desc">
         <textarea name="profile.desc" value={resume} cols="30" onChange={e => setResume(e.target.value)} rows="10" placeholder="description"></textarea>
       </div>
-      <div className="firstname">
+      <div className="name">
         <input type="text" value={firstname} onChange={e => setFirstname(e.target.value)} name="first_name" placeholder="prénom"/>
-      </div>
-      <div className="firstname">
         <input type="text" value={lastname} onChange={ e => setLastname(e.target.value) } name="last_name" placeholder="nom"/>
       </div>
-      <input type="submit" value="Valider" />
+      <div className={styles.submit}>
+        <input type="submit" value="Valider" />
+      </div>
     </form>
   );
 }
