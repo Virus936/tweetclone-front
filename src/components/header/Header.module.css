@@ -8,11 +8,16 @@
   align-items: center;
 }
 
-.Header :last-child{
+.Log{
+  display:flex; 
+  flex-direction: row;
+  gap:12px;
   margin-left: auto;
+  font-family: Helvetica,Arial,sans-serif;
   text-decoration: none;
   color:lightyellow
 }
 .link{
   text-decoration:none;
+  color:lightyellow
 }

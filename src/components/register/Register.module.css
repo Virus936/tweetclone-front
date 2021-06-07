@@ -20,6 +20,14 @@
   border-radius: 4px;
   box-sizing: border-box;
 }
+.Register .validatorInput{
+    border-radius: 20px;
+    padding: 10px;
+    border: solid 2px green;
+    background-color: rgb(0, 156, 98);
+    color: #fff;
+    font-weight: bold;
+}
 @media screen and ( min-width:600px ){
   .Register{
     grid-template-columns: 1fr 1fr;
