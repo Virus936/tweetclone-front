@@ -4,7 +4,7 @@ import {useStateValue} from '../../context/logContext'
 import {Redirect} from 'react-router-dom'
 import { API_URL } from '../../setting';
 
-function Login({setToken}) {
+function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [ authToken, dispatch ]= useStateValue()

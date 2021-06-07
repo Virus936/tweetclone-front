@@ -1,0 +1,28 @@
+.Register{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:20px;
+  margin:30px auto;
+  width:100%;
+  padding:10px
+}
+
+.inputElement{
+  height:50px;
+}
+.Register input{
+  width:100%;
+  padding: 12px 20px;
+  background-color: LightGoldenrodYellow;
+  color:mediumseagreen;
+  display: inline-block;
+  border: solid mediumseagreen;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+@media screen and ( min-width:600px ){
+  .Register{
+    grid-template-columns: 1fr 1fr;
+    width:600px;
+  }
+}

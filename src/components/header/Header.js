@@ -24,8 +24,12 @@ function Header({ logout }) {
 
   return (
     <header className={ styles.Header } >
+      <Link to="/">
       <Logo fill='lightyellow' style={{width:'40px', height:'40px' }} />
+      </Link>
+      <Link className={styles.link} to="/">
       <h1>TweetFarmer</h1>
+      </Link>
       <Log />
 
     </header>
