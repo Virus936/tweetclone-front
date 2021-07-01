@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './Like.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-function Like({isLike, onClick}) {
+function Like({isLike, onClick, like}) {
 
   return <span onClick={onClick}>
+    {like}
     <FontAwesomeIcon 
       color={isLike?'red':'lightgrey'}
       icon={faHeart} 

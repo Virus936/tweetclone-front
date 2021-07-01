@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
-import styles from './Tweet.module.css';
 import {useStateValue} from '../../context/logContext'
 import {refreshToken } from '../../actions/auth-action'
 import { API_URL } from '../../setting';
 import Like from './Like'
+import styled from 'styled-components'
 
 
 export const Tweet = ({author, content, picture,tweetid, numlike, likeornot}) => { 
@@ -58,19 +58,74 @@ export const Tweet = ({author, content, picture,tweetid, numlike, likeornot}) =>
 
   }
   
-  return <div className={styles.Tweet} ref={tweetref}>
-    <aside>
-    <img className={styles.profile} src={author.profile.pp} alt="" />
-    </aside>
-      <h2>{author.username}</h2>
-      <div>
-        <p>{content}</p>
-        {picture&& <img src={picture} alt="pictweet" /> }
-          {like} 
+    return <Container ref={tweetref}>
+        <aside>
+            <img className="profile" src={author.profile.pp} alt="" />
+        </aside>
+        <h2><strong>{author.username}</strong></h2>
+        <div className='content'>
+            <p>{content}</p>
+            {picture&& <img src={picture} alt="pictweet" /> }
+        </div>
+        <div className="action">
+            <Like like={like} onClick={handleLike} isLike={islike}/>
             <Like onClick={handleLike} isLike={islike}/>
-      </div>
-    </div> 
+        </div>
+    </Container> 
 }
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 70px auto;
+  grid-gap: 10px;
+  border-radius: 10px;
+  background: linear-gradient(145deg,#6cffd0, #5be3af);
+  box-shadow:  6px 6px 14px #56d6a5,
+    -6px -6px 14px #74ffdf;
+  margin: 30px;
+  padding:20px;
+  overflow:hidden;
+  transition:0.5s;
+  opacity:0;
+
+  & aside{
+    grid-row:span 3;
+
+    & .profile{
+        display:block;
+        width:50px;
+    }
+  }
+  & h2 {
+    cursor:pointer;
+  }
+  
+  & .content{
+    overflow-x:hidden;
+    word-wrap:break-word;
+    padding-right:5px;
+    & p {
+      margin-bottom:10px;
+    }
+
+    & img{
+        display: block;
+        max-width: 400px;
+        margin: auto;
+    }
+  }
+
+  & .action { 
+    display:flex;
+    height:50px;
+    align-items:center;
+    justify-content:space-around;
+  }
+  
+`
+
+
+
 Tweet.defaultProps = {
   author : {
     username:'',

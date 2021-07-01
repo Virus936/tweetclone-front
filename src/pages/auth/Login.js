@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import styles from './Login.module.css';
 import {useStateValue} from '../../context/logContext'
 import {Redirect} from 'react-router-dom'
 import { API_URL } from '../../setting';
+import styled from 'styled-components'
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -33,7 +33,7 @@ function Login() {
   }
 
   return (
-    <div className={styles.Login}>
+    <Container >
       {authToken?.access &&  <Redirect to='/'/> }
       <form action="/">
         <input 
@@ -56,9 +56,52 @@ function Login() {
         />
         <button type="submit" onClick={handleLogin}>Login</button>
       </form>
-      
-    </div>
+
+    </Container>
   );
 }
+
+const Container = styled.div`
+  position: absolute;
+  display: flex;
+  bottom:50vh;
+  justify-content: center;
+  align-items: center;
+  width:100vw;
+
+  & form {
+    display:flex; 
+    flex-direction: column;
+    gap:20px;
+  }
+
+  & input{
+    padding: 12px 20px;
+    background-color: LightGoldenrodYellow;
+    color:mediumseagreen;
+    display: inline-block;
+    border: solid mediumseagreen;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  & input:focus{
+    border:mediumseagreen;
+
+    outline:solid seagreen;
+    }
+
+
+  & button{
+    padding: 12px 20px;
+    border-radius:20px;
+    padding: 10px;
+    border:solid 2px green ;
+    background-color: rgb(0, 156, 98);
+    color:#fff;
+    font-weight: bold;
+  }
+
+`
 
 export default Login;

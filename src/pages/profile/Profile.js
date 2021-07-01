@@ -3,6 +3,7 @@ import styles from './Profile.module.css';
 import {useStateValue} from '../../context/logContext'
 import {refreshToken, updateProfile} from '../../actions/auth-action'
 import { API_URL } from '../../setting';
+import styled from 'styled-components'
 
 function Profile() {
   const [ authToken, dispatch ]= useStateValue()
@@ -59,13 +60,12 @@ function Profile() {
         item: updatedToken.access
       })
 
-    console.log(updatedToken)
     await updateProfile(e.target, authToken.access)
   }
 
   return (
-    <form className={styles.Profile} onSubmit={submitProfile}>
-      <div className={styles.picture}>
+    <Form onSubmit={submitProfile}>
+      <div className="picture">
         <img src={picture} alt="a" />
         <input type="file" name="profile.pp" />
       </div>
@@ -82,9 +82,51 @@ function Profile() {
       <div className={styles.submit}>
         <input type="submit" value="Valider" />
       </div>
-    </form>
+    </Form>
   );
 }
 
+const Form = styled.form`
+  display:grid;
+  width:700px;
+  margin:40px auto;
+  grid-column: ;
+  grid-template-columns: 1fr 1fr;
+  
+  & .picture{
+    display:flex;
+  }
+  & img { 
+    height: 70px;
+    width: 70px;
+    overflow: hidden;
+  }
+  & input:not([type=file]){
+  
+    padding: 12px 20px;
+    background-color: LightGoldenrodYellow;
+    color:mediumseagreen;
+    display: inline-block;
+    border: solid mediumseagreen;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  & textarea{
+    resize:none;
+    focus:none;
+    border : none;
+    color:green;
+    font-size: 1rem;
+    background-color: rgba(200,200,200, .3);
+  }
+  & input[type=submit]{
+    border-radius:20px;
+    padding: 10px;
+    border:solid 2px green ;
+    background-color: rgb(0, 156, 98);
+    color:#fff;
+    font-weight: bold;
+  }
+`
 
 export default Profile;

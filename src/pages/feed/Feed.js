@@ -1,10 +1,10 @@
 import React, {useState, useEffect } from 'react';
-import styles from './Feed.module.css';
 import {useStateValue} from '../../context/logContext'
 import {refreshToken } from '../../actions/auth-action'
 import { API_URL } from '../../setting';
-import { Tweet } from './Tweet';
-import { TweetCreate } from './TweetCreate';
+import { Tweet } from '../../components/tweet/Tweet';
+import { TweetCreate } from '../../components/tweet/TweetCreate';
+import styled from 'styled-components'
 
 function Feed() {
   const [feed, setFeed] = useState([])
@@ -14,11 +14,9 @@ function Feed() {
     const newFeed = feed.slice()
     newFeed.unshift(tweet)
     setFeed(newFeed)
-    console.log(feed)
   }
 
   useEffect(() => {
-
     const fetchAPI = async () => {
       const myHeaders = new Headers();
       if(authToken){
@@ -53,12 +51,21 @@ function Feed() {
   }, [])
 
   return (
-    <div className={styles.Feed} >
+    <Container>
       {authToken && <TweetCreate addTweet={addTweet}/> }
 
       { feed.map(tweet=><Tweet key={tweet.id} tweetid={tweet.id} numlike= { tweet.numlike } likeornot={tweet.likeornot} author={ tweet.author } picture={tweet.picture} content={tweet.content} />)}
-    </div>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  width:700px;
+  background-color:#65fcc2;
+  box-shadow:  6px 6px 14px #56d6a5,
+    -6px -6px 14px #74ffdf;
+  margin:40px auto;
+  padding:50px;
+`
 
 export default Feed;

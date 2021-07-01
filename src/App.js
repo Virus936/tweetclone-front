@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import Header from './components/header/Header';
-import Feed from './components/feed/Feed';
-import Login from './components/auth/Login';
-import Profile from './components/profile/Profile'
-import Register from './components/register/Register'
+import Feed from './pages/feed/Feed';
+import Login from './pages/auth/Login';
+import Profile from './pages/profile/Profile'
+import Register from './pages/register/Register'
 
 import { StateProvider } from './context/logContext'
 import {
