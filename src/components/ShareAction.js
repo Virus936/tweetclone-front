@@ -2,14 +2,14 @@ import { useRef } from 'react';
 import styled from 'styled-components'
 import {AddAPhoto, AddLocation} from '@material-ui/icons'
 
-export function InputFile({handlePicture}) {
+export function InputFile({handlePicture, name}) {
   const fileRef = useRef(null)
   return (
     <File>
       <label htmlFor="shareimage">
         <AddAPhoto/>
       </label>
-      <input type="file" onChange={()=>{handlePicture(fileRef.current.files[0])}} ref={fileRef}  name="image" id="shareimage" />
+      <input type="file" onChange={()=>{handlePicture(fileRef.current.files[0])}} ref={fileRef}  name={ name } id="shareimage" />
     </File>
   );
 }

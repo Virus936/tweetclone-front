@@ -44,12 +44,17 @@ function Header({ logout }) {
 
 const Container = styled.header`
   display: flex;
-  background-color:DarkOliveGreen;
-  padding:20px 60px;
+  position:sticky;
+  grid-area:header;
+  background-color:seagreen;
+  height:50px;
+  padding:0 20px;
   color: lightyellow;
   font-family: "lobster";
   gap:12px;
   align-items: center;
+  top:0;
+  z-index:1;
   
   & .link{
     text-decoration:none;

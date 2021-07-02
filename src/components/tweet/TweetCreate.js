@@ -39,7 +39,7 @@ export const TweetCreate = ({addTweet}) => {
       <FormTweet  onSubmit={handleSubmit}>
         <textarea  name="content" value={content} onChange={ (e) => setContent(e.target.value) } cols="30" rows="10" placeholder='tweeter ici'></textarea>
         <div className='shareaction'>
-          <InputFile handlePicture={handle2} /> 
+          <InputFile handlePicture={handle2} name="picture"/> 
 
           <InputLocation />
           <input type="submit" value="Envoyer" />

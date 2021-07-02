@@ -8,3 +8,11 @@
 body{
   background-color:#65fcc2;
 }
+#root{
+  position: relative;
+  display: grid;
+  grid-template-areas: 
+      "header header header"
+      "left   feed   right" ;
+  grid-template-columns: 300px 1fr 300px;
+}

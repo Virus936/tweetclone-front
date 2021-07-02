@@ -59,7 +59,7 @@ function Feed() {
   )
 }
 
-const Container = styled.div`
+const Container = styled.main`
   width:700px;
   background-color:#65fcc2;
   box-shadow:  6px 6px 14px #56d6a5,

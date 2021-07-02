@@ -80,13 +80,15 @@ const Container = styled.div`
   grid-gap: 10px;
   border-radius: 10px;
   background: linear-gradient(145deg,#6cffd0, #5be3af);
-  box-shadow:  6px 6px 14px #56d6a5,
+  box-shadow:
+     6px  6px 14px #56d6a5,
     -6px -6px 14px #74ffdf;
   margin: 30px;
   padding:20px;
   overflow:hidden;
   transition:0.5s;
   opacity:0;
+  z-index:-1;
 
   & aside{
     grid-row:span 3;
